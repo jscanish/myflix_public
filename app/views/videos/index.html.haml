@@ -1,0 +1,4 @@
+.videos.row
+  - @videos.each do |video|
+    .video.span2
+      = link_to (image_tag(src="/tmp/#{video.small_cover_url}.jpg")), video_path(video)
