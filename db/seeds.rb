@@ -6,6 +6,32 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Video.create(title: "Firefly", description: "A sci fi show", small_cover_url: "src=/tmp/firefly.jpg", large_cover_url: "src=/tmp/firefly.jpg")
-Video.create(title: "The Wire", description: "A police drama", small_cover_url: "/tmp/the_wire.jpg", large_cover_url: "/tmp/the_wire.jpg")
-Video.create(title: "Avatar: The Last Airbender", description: "A cartoon", small_cover_url: "/tmp/avatar_airbender.jpg", large_cover_url: "/tmp/avatar_airbender.jpg")
+Video.create(title: "South Park",
+            description: "The ongoing narrative of four boys — Stan Marsh, Kyle Broflovski, Eric Cartman and Kenny McCormick — and their bizarre adventures in and around the titular Colorado town.",
+            small_cover_url: "south_park",
+            large_cover_url: "south_park_large",
+            category_id: 2)
+Video.create(title: "Monk",
+            description: "A detective mystery television series created by Andy Breckman and starring Tony Shalhoub as the eponymous character, Adrian Monk.",
+            small_cover_url: "monk",
+            large_cover_url: "monk_large",
+            category_id: 1)
+Video.create(title: "Futurama",
+            description: "The series follows the adventures of a late-20th-century New York City pizza delivery boy, Philip J. Fry, who, after being unwittingly cryogenically frozen for one thousand years, finds employment at Planet Express, an interplanetary delivery company in the retro-futuristic 31st century.",
+            small_cover_url: "futurama",
+            large_cover_url: "futurama_large",
+            category_id: 2)
+Video.create(title: "Breaking Bad",
+            description: "The story of Walter White (Bryan Cranston), a struggling high school chemistry teacher who is diagnosed with inoperable lung cancer at the beginning of the series. He turns to a life of crime, producing and selling methamphetamine with a former student.",
+            small_cover_url: "breaking_bad",
+            large_cover_url: "breaking_bad_large",
+            category_id: 1)
+Video.create(title: "Firefly",
+            description: "The series is set in the year 2517, after the arrival of humans in a new star system, and follows the adventures of the renegade crew of Serenity, a 'Firefly-class' spaceship.",
+            small_cover_url: "firefly",
+            large_cover_url: "firefly_large",
+            category_id: 3)
+
+Category.create(name: "TV Dramas")
+Category.create(name: "TV Comedies")
+Category.create(name: "TV Science Fiction")

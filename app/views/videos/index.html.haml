@@ -1,4 +1,6 @@
-.videos.row
-  - @videos.each do |video|
-    .video.span2
-      = link_to (image_tag(src="/tmp/#{video.small_cover_url}.jpg")), video_path(video)
+
+= render 'category_videos', title: "TV Comedies", id_number: 2
+
+= render 'category_videos', title: "TV Dramas", id_number: 1
+
+= render 'category_videos', title: "TV Science Fiction", id_number: 3

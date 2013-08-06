@@ -1,0 +1,7 @@
+%article.video_category
+  %header
+    %h3= link_to title, category_path(id: id_number)
+  .videos.row
+    -Category.find(id_number).videos. each do |video|
+      .video.span2
+        = link_to (image_tag(src="/tmp/#{video.small_cover_url}.jpg")), video_path(video)
