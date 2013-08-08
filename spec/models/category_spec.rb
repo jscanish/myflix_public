@@ -7,7 +7,7 @@ describe Category do
   it "saves itself" do
     category = Category.new(name: "Action Movies")
     category.save
-    Category.first.name.should == "Action Movies"
+    expect(Category.first).to eq(category)
   end
 
 end

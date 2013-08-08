@@ -13,7 +13,7 @@ describe Video do
             large_cover_url: "breaking_bad_large",
             category_id: 1)
     video.save
-    Video.first.title.should == "Breaking Bad"
+    expect(Video.first).to eq(video)
   end
 
 end
