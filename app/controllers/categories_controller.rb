@@ -1,7 +1,11 @@
 class CategoriesController < ApplicationController
 
   def index
-    @categories = Category.all
+    if params[:search_by_title]
+      @videos = Video.search(params[:search_by_title])
+    else
+      @categories = Category.all
+    end
   end
 
   def show
