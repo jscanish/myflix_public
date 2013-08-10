@@ -15,5 +15,9 @@ describe Category do
       Category.create(name: "Drama")
       expect(Category.find(1).recent_videos).to eq([Video.find(8), Video.find(7), Video.find(6), Video.find(5), Video.find(4), Video.find(3)])
     end
+    it "returns empty array if category has no videos" do
+      Category.create(name: "Action")
+      expect(Category.find(1).recent_videos).to eq([])
+    end
   end
 end
