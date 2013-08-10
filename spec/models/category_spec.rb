@@ -10,7 +10,7 @@ describe Category do
       Category.create(name: "Comedy")
       expect(Category.find(1).recent_videos).to eq([Video.find(2), Video.first])
     end
-    it "should show only six most recent videos" do
+    it "shows only six most recent videos" do
       8.times{Video.create(title: "Monk", description: "a good show", category_id: 1)}
       Category.create(name: "Drama")
       expect(Category.find(1).recent_videos).to eq([Video.find(8), Video.find(7), Video.find(6), Video.find(5), Video.find(4), Video.find(3)])
