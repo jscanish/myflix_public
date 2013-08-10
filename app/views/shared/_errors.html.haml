@@ -1,0 +1,8 @@
+- if obj.errors.any?
+  .alert.alert-error
+    %ul
+      %p Please fix the following errors:
+      - obj.errors.full_messages.each do |message|
+        %li
+          = message
+

@@ -1,0 +1,20 @@
+= render 'shared/errors', obj: @user
+
+%section.register.container
+  .row
+    .span10.offset1
+      %form.form-horizontal
+      = form_for @user, class: "form-horizontal" do |f|
+        %header
+          %h1 Register
+        %fieldset
+          .control-group
+            = f.label :email
+            = f.email_field :email
+            = f.label :password
+            = f.password_field :password
+            = f.label :full_name
+            = f.text_field :full_name
+        %fieldset.actions.control-group
+          .controls
+            %input(type="submit" value="Sign Up" class="btn")
