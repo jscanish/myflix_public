@@ -7,7 +7,7 @@ class Video < ActiveRecord::Base
     if string.blank?
       return []
     else
-      where('title LIKE ?', "%#{string}%")
+      where('title LIKE ?', "%#{string}%").order("created_at DESC")
     end
   end
 
