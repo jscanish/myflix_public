@@ -1,7 +1,5 @@
 class SessionsController < ApplicationController
 
-  def front; end
-
   def new; end
 
   def create
