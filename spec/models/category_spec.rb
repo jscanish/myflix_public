@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Category do
   it {should have_many(:videos)}
 
-  describe "#recent_videos" do
+  describe "recent_videos" do
     it "shows all videos if total < 6" do
       Video.create(title: "Monk", description: "a good show", category_id: 1)
       Video.create(title: "Sherlock", description: "a great show", category_id: 1)
