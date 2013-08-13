@@ -2,19 +2,32 @@ require 'spec_helper'
 
 describe VideosController do
   describe "GET show" do
-    context "authenticated users" do
-      before do
-        user = User.create(full_name: "josh scanish", email: "josh@example.com", password: "password")
-        session[:user_id] = user.id
-      end
+    it "sets @video variable for authenticated useres" do
+      user = Fabricate(:user)
+      session[:user_id] = user.id
+      video = Fabricate(:video)
+      get :show, id: video.id
+      expect(assigns(:video)).to eq(video)
+    end
 
-      it "sets @video variable" do
-        video = Video.create(title: "name", description: "hello there")
-        get :show, id: video.id
-        expect(assigns(Video.first)).to eq(video)
-      end
+    it "redirects unauthenticated users to login page" do
+      video = Fabricate(:video)
+      get :show, id: video.id
+      expect(response).to redirect_to login_path
+    end
+  end
 
-      it "renders show template"
+  describe "POST search" do
+    it "sets @videos for authenticated users" do
+      session[:user_id] = Fabricate(:user).id
+      monk = Fabricate(:video, title: "Monk")
+      post :search, string: 'onk'
+      expect(assigns(:videos)).to eq([monk])
+    end
+    it "redirects to login page for unauthenticated users" do
+      monk = Fabricate(:video, title: "Monk")
+      post :search, string: 'onk'
+      expect(response).to redirect_to login_path
     end
   end
 end
