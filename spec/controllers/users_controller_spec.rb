@@ -10,27 +10,27 @@ describe UsersController do
 
   describe "POST create" do
     it "creates the user" do
-      post :create, user: {full_name: "Josh", email: "josh@example.com", password: "password"}
+      post :create, user: Fabricate.attributes_for(:user)
       expect(User.count).to eq(1)
     end
     it "starts a new session" do
-      post :create, user: {full_name: "Josh", email: "josh@example.com", password: "password"}
+      post :create, user: Fabricate.attributes_for(:user)
       expect(session[:user_id]).to eq(User.first.id)
     end
     it "redirects to home path" do
-      post :create, user: {full_name: "Josh", email: "josh@example.com", password: "password"}
+      post :create, user: Fabricate.attributes_for(:user)
       expect(response).to redirect_to home_path
     end
     it "does not create user when registration fails" do
-      post :create, user: {full_name: "Josh", email: "josh@example.com", password: "hi"}
+      post :create, user: Fabricate.attributes_for(:user, password: "hi")
       expect(User.count).to eq(0)
     end
     it "renders :new template when registration fails" do
-      post :create, user: {full_name: "Josh", email: "josh@example.com", password: "hi"}
+      post :create, user: Fabricate.attributes_for(:user, password: "hi")
       expect(response).to render_template :new
     end
     it "sets @user variable when registration fails" do
-      post :create, user: {full_name: "Josh", email: "josh@example.com", password: "hi"}
+      post :create, user: Fabricate.attributes_for(:user, password: "hi")
       expect(assigns(:user)).to be_instance_of(User)
     end
   end
