@@ -43,6 +43,9 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    fabrication (2.7.2)
+    faker (1.2.0)
+      i18n (~> 0.5)
     haml (4.0.3)
       tilt
     haml-rails (0.4)
@@ -135,6 +138,8 @@ DEPENDENCIES
   bcrypt-ruby (= 3.0.1)
   bootstrap-sass
   coffee-rails
+  fabrication
+  faker
   haml-rails
   jquery-rails
   pg
