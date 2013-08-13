@@ -1,0 +1,18 @@
+%section.register.container
+  .row
+    .span10.offset1
+      %form.form-horizontal
+      = errors_form_for @user, class: "form-horizontal" do |f|
+        %header
+          %h1 Register
+        %fieldset
+          .control-group
+            = f.label :email, "Email"
+            = f.email_field :email
+            = f.label :password, "Password"
+            = f.password_field :password
+            = f.label :full_name, "Full Name"
+            = f.text_field :full_name
+        %fieldset.actions.control-group
+          .controls
+            %input(type="submit" value="Sign Up" class="btn")

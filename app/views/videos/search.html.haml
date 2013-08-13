@@ -1,0 +1,8 @@
+%article.video_category
+  %header
+    - if @videos.count == 0
+      %h3 No Results Found
+    -else
+      %h3 Results
+      - @videos.each do |video|
+        =link_to (image_tag(src="/tmp/#{video.small_cover_url}.jpg")), video_path(video)
