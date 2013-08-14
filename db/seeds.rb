@@ -11,7 +11,7 @@ Video.create(title: "South Park",
             small_cover_url: "south_park",
             large_cover_url: "south_park_large",
             category_id: 2)
-Video.create(title: "Monk",
+monk = Video.create(title: "Monk",
             description: "A detective mystery television series created by Andy Breckman and starring Tony Shalhoub as the eponymous character, Adrian Monk.",
             small_cover_url: "monk",
             large_cover_url: "monk_large",
@@ -35,3 +35,9 @@ Video.create(title: "Firefly",
 Category.create(name: "TV Dramas")
 Category.create(name: "TV Comedies")
 Category.create(name: "TV Science Fiction")
+
+josh = User.create(full_name: "Josh Scanish", email: "josh@example.com", password: "josh")
+jason = User.create(full_name: "Jason S", email: "jason@example.com", password: "jason")
+
+Review.create(user: josh, video: monk, rating: 3, content: "A really good show!")
+Review.create(user: josh, video: monk, rating: 2, content: "An ok show")

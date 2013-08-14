@@ -13,3 +13,32 @@
         .actions
           %a.btn.btn-primary(href="") Watch Now
           %a.btn(href="") + My Queue
+
+%section.reviews.container
+  .row
+    .span10.offset1
+      %form
+        %fieldset
+          %label Rate this video
+          %select(name="")
+            %option(value="5") 5 Stars
+            %option(value="4") 4 Stars
+            %option(value="3") 3 Stars
+            %option(value="2") 2 Stars
+            %option(value="1") 1 Star
+          %label Write Review
+          %textarea.span6(name="" rows="6")
+        %fieldset.actions.clearfix
+          %input(type="submit" value="Submit" class="btn")
+          %a(href="") Cancel
+      %header
+        %h3 User Reviews (#{@reviews.count})
+      %ul
+        - @reviews.each do |review|
+          %article.review
+            %li.row
+              .span2
+                %span Rating: #{review.rating} / 5
+                %p by <a href="">#{review.user.full_name}</a>
+              .span8
+                %p #{review.content}
