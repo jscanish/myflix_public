@@ -27,13 +27,14 @@
           %input(type="submit" value="Submit" class="btn")
           = link_to "Cancel", @video
       %header
-        %h3 User Reviews (#{@reviews.count})
+        %h3 User Reviews (#{@video.reviews.count})
       %ul
-        - @reviews.each do |review|
+        - @video.reviews.each do |review|
           %article.review
             %li.row
               .span2
                 %span Rating: #{review.rating} / 5
                 %p by <a href="">#{review.user.full_name}</a>
+                %small #{time_ago_in_words(review.created_at)} ago
               .span8
                 %p #{review.content}
