@@ -11,8 +11,7 @@ describe VideosController do
     end
 
     it "sets @reviews variable for authenticated users" do
-      user = Fabricate(:user)
-      session[:user_id] = user.id
+      session[:user_id] = Fabricate(:user).id
       video = Fabricate(:video)
       review1 = Fabricate(:review, video: video)
       review2 = Fabricate(:review, video: video)
