@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :require_user
+
   def create
     @video = Video.find(params[:video_id])
     @review = @video.reviews.new(params.require(:review).permit(:rating, :content))
@@ -13,4 +14,5 @@ class ReviewsController < ApplicationController
       render 'videos/show'
     end
   end
+
 end
