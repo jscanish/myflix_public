@@ -17,6 +17,7 @@ module Myflix
 
     #config.active_record.whitelist_attributes = false
     config.assets.enabled = true
+    config.secret_key_base = "asdfjkl;"
     config.assets.version = '1.0'
     config.generators do |g|
       g.orm :active_record

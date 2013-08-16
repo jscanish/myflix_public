@@ -4,6 +4,8 @@ gem 'rails', '4.0.0'
 gem 'haml-rails'
 gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '= 3.0.1'
+gem 'fabrication'
+gem 'faker'
 
 group :assets do
   gem 'sass-rails'
@@ -15,6 +17,7 @@ group :development do
   gem 'sqlite3'
   gem 'pry'
   gem 'pry-nav'
+  gem 'better_errors'
 end
 
 group :production do
