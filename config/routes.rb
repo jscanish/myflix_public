@@ -4,6 +4,7 @@ Myflix::Application.routes.draw do
   post "/login", to: "sessions#create"
   get "/logout", to: "sessions#destroy"
   get "/home", to: "categories#index"
+  get "/my_queue", to: "queue_items#index"
 
   resources :users, only: [:create, :show]
   resources :categories, only: [:show]
