@@ -23,12 +23,7 @@
               %td
                 = button_to "Play", nil, class: "btn"
               %td
-                %select(name="")
-                  %option(value="5") 5 Stars
-                  %option(value="4") 4 Stars
-                  %option(value="3") 3 Stars
-                  %option(value="2") 2 Stars
-                  %option(value="1") 1 Star
+                = "#{queue_item.review_rating}"
               %td
                 = link_to queue_item.video.category.name, queue_item.video.category
               %td
