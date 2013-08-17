@@ -24,8 +24,8 @@ describe QueueItemsController do
       it "sets @queue_item variable" do
         expect(QueueItem.first.video).to eq(@video)
       end
-      it "redirects to my_queue page" do
-        expect(response).to redirect_to my_queue_path
+      it "redirects to current page" do
+        expect(response).to redirect_to @video
       end
       it "associates video with current user" do
         expect(QueueItem.first.user).to eq(@user)

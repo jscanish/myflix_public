@@ -12,7 +12,8 @@ class QueueItemsController < ApplicationController
       flash[:notice] = "That video is already in your queue"
     else
       @queue_item = @video.queue_items.create(user: current_user, position: queue_position)
-      redirect_to my_queue_path
+      # redirect_to my_queue_path
+      redirect_to @video
       flash[:notice] = "Video added to your queue!"
     end
   end
