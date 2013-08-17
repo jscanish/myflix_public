@@ -69,4 +69,33 @@ describe QueueItemsController do
       end
     end
   end
+
+  describe "DELETE destroy" do
+    context "authenticated users" do
+      before do
+        @user = Fabricate(:user)
+        session[:user_id] = @user.id
+        @video1 = Fabricate(:video)
+        @video2 = Fabricate(:video)
+        Fabricate(:queue_item, video: @video1, user: @user, position: 1)
+        Fabricate(:queue_item, video: @video2, user: @user, position: 2)
+      end
+      it "redirects to my_queue page" do
+        post :destroy, id: 1
+        expect(response).to redirect_to my_queue_path
+      end
+      it "removes video from queue" do
+        post :destroy, id: 1
+        expect(@user.queue_items.count).to eq(1)
+      end
+      it "orders remaining videos correctly" do
+        post :destroy, id: 1
+        expect(@user.queue_items.first.position).to eq(1)
+      end
+    end
+
+
+
+    context "unauthenticated users"
+  end
 end

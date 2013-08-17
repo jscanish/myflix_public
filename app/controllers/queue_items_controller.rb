@@ -12,14 +12,16 @@ class QueueItemsController < ApplicationController
       flash[:notice] = "That video is already in your queue"
     else
       @queue_item = @video.queue_items.create(user: current_user, position: queue_position)
-      # redirect_to my_queue_path
       redirect_to @video
       flash[:notice] = "Video added to your queue!"
     end
   end
 
   def destroy
-
+    @queue_item = QueueItem.find(params[:id])
+    @queue_item.destroy
+    reorder_queue_position(current_user)
+    redirect_to my_queue_path
   end
 
 
@@ -29,6 +31,13 @@ class QueueItemsController < ApplicationController
     current_user.queue_items.count + 1
   end
 
+  def reorder_queue_position(user)
+    count = 1
+    user.queue_items.each do |item|
+      item.update(position: count)
+      count += 1
+    end
+  end
 
 end
 
