@@ -21,7 +21,7 @@ futurama = Video.create(title: "Futurama",
             small_cover_url: "futurama",
             large_cover_url: "futurama_large",
             category_id: 2)
-Video.create(title: "Breaking Bad",
+breaking_bad = Video.create(title: "Breaking Bad",
             description: "The story of Walter White (Bryan Cranston), a struggling high school chemistry teacher who is diagnosed with inoperable lung cancer at the beginning of the series. He turns to a life of crime, producing and selling methamphetamine with a former student.",
             small_cover_url: "breaking_bad",
             large_cover_url: "breaking_bad_large",
@@ -44,3 +44,4 @@ Review.create(user: josh, video: monk, rating: 2, content: "An ok show")
 
 QueueItem.create(user: jason, video: monk)
 QueueItem.create(user: jason, video: futurama)
+QueueItem.create(user: josh, video: breaking_bad)
