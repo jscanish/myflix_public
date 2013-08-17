@@ -7,7 +7,7 @@ class QueueItem < ActiveRecord::Base
     if @review != nil
       @review.rating
     else
-      nil
+      "No Rating"
     end
   end
 end

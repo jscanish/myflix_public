@@ -79,23 +79,33 @@ describe QueueItemsController do
         @video2 = Fabricate(:video)
         Fabricate(:queue_item, video: @video1, user: @user, position: 1)
         Fabricate(:queue_item, video: @video2, user: @user, position: 2)
+        post :destroy, id: 1
       end
       it "redirects to my_queue page" do
-        post :destroy, id: 1
         expect(response).to redirect_to my_queue_path
       end
       it "removes video from queue" do
-        post :destroy, id: 1
         expect(@user.queue_items.count).to eq(1)
       end
       it "orders remaining videos correctly" do
-        post :destroy, id: 1
         expect(@user.queue_items.first.position).to eq(1)
       end
     end
 
 
 
-    context "unauthenticated users"
+    context "unauthenticated users" do
+      before do
+        @video1 = Fabricate(:video)
+        Fabricate(:queue_item, video: @video1, user: @user, position: 1)
+        post :destroy, id: 1
+      end
+      it "redirects user to login page" do
+        expect(response).to redirect_to login_path
+      end
+      it "doesn't delete the video" do
+        expect(QueueItem.count).to eq(1)
+      end
+    end
   end
 end
