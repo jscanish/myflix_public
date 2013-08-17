@@ -23,7 +23,7 @@
               %td
                 = button_to "Play", nil, class: "btn"
               %td
-                = "#{queue_item.review_rating}"
+                = pluralize(queue_item.review_rating, "Star")
               %td
                 = link_to queue_item.video.category.name, queue_item.video.category
               %td

@@ -5,9 +5,9 @@ class QueueItem < ActiveRecord::Base
   def review_rating
     @review = Review.where(user_id: user_id, video_id: video_id).first
     if @review != nil
-      "#{@review.rating} Stars"
+      @review.rating
     else
-      "No Rating"
+      "0"
     end
   end
 end
