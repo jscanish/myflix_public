@@ -42,6 +42,6 @@ jason = User.create(full_name: "Jason S", email: "jason@example.com", password: 
 Review.create(user: josh, video: monk, rating: 3, content: "A really good show!")
 Review.create(user: josh, video: monk, rating: 2, content: "An ok show")
 
-QueueItem.create(user: jason, video: monk)
-QueueItem.create(user: jason, video: futurama)
-QueueItem.create(user: josh, video: breaking_bad)
+QueueItem.create(user: jason, video: monk, position: 1)
+QueueItem.create(user: jason, video: futurama, position: 2)
+QueueItem.create(user: josh, video: breaking_bad, position: 1)
