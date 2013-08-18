@@ -92,8 +92,6 @@ describe QueueItemsController do
       end
     end
 
-
-
     context "unauthenticated users" do
       before do
         @video1 = Fabricate(:video)
