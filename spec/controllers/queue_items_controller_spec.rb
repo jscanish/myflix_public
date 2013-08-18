@@ -70,7 +70,7 @@ describe QueueItemsController do
     end
   end
 
-  describe "DELETE destroy" do
+  describe "POST destroy" do
     context "authenticated users" do
       before do
         @user = Fabricate(:user)
