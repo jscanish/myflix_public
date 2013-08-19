@@ -8,7 +8,7 @@ class QueueItemsController < ApplicationController
   def create
     @video = Video.find(params[:video_id])
 
-    if current_user.queue_items.map {|item| item.video}.include?(@video)
+    if already_in_queue?(current_user)
       redirect_to @video
       flash[:notice] = "That video is already in your queue"
     else
@@ -40,6 +40,9 @@ class QueueItemsController < ApplicationController
     end
   end
 
+  def already_in_queue?(user)
+    user.queue_items.map {|item| item.video}.include?(@video)
+  end
 end
 
 
