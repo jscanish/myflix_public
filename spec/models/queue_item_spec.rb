@@ -19,11 +19,11 @@ describe QueueItem do
       queue_item = Fabricate(:queue_item, video: video, user: user)
       expect(queue_item.review_rating).to eq(4)
     end
-    it "returns 0 if no rating exists" do
+    it "returns no rating if no rating exists" do
       user = Fabricate(:user)
       video = Fabricate(:video)
       queue_item = Fabricate(:queue_item, video: video, user: user)
-      expect(queue_item.review_rating).to eq("0")
+      expect(queue_item.review_rating).to eq("No Rating")
     end
   end
 
