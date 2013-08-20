@@ -16,12 +16,12 @@ monk = Video.create(title: "Monk",
             small_cover_url: "monk",
             large_cover_url: "monk_large",
             category_id: 1)
-Video.create(title: "Futurama",
+futurama = Video.create(title: "Futurama",
             description: "The series follows the adventures of a late-20th-century New York City pizza delivery boy, Philip J. Fry, who, after being unwittingly cryogenically frozen for one thousand years, finds employment at Planet Express, an interplanetary delivery company in the retro-futuristic 31st century.",
             small_cover_url: "futurama",
             large_cover_url: "futurama_large",
             category_id: 2)
-Video.create(title: "Breaking Bad",
+breaking_bad = Video.create(title: "Breaking Bad",
             description: "The story of Walter White (Bryan Cranston), a struggling high school chemistry teacher who is diagnosed with inoperable lung cancer at the beginning of the series. He turns to a life of crime, producing and selling methamphetamine with a former student.",
             small_cover_url: "breaking_bad",
             large_cover_url: "breaking_bad_large",
@@ -41,3 +41,7 @@ jason = User.create(full_name: "Jason S", email: "jason@example.com", password: 
 
 Review.create(user: josh, video: monk, rating: 3, content: "A really good show!")
 Review.create(user: josh, video: monk, rating: 2, content: "An ok show")
+
+QueueItem.create(user: jason, video: monk, position: 1)
+QueueItem.create(user: jason, video: futurama, position: 2)
+QueueItem.create(user: josh, video: breaking_bad, position: 1)
