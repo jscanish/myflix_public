@@ -25,6 +25,19 @@ class QueueItemsController < ApplicationController
     redirect_to my_queue_path
   end
 
+  def edit
+    begin
+      update_queue_items
+    rescue ActiveRecord::RecordInvalid
+      flash[:error] = "You must enter valid position numbers"
+      redirect_to my_queue_path
+      return
+    end
+
+    reorder_queue_position(current_user)
+    redirect_to my_queue_path
+  end
+
 
   private
 
@@ -32,11 +45,22 @@ class QueueItemsController < ApplicationController
     current_user.queue_items.count + 1
   end
 
+  def normalize_queue_position(user)
+
+  end
+
   def reorder_queue_position(user)
-    count = 1
-    user.queue_items.each do |item|
-      item.update(position: count)
-      count += 1
+    current_user.queue_items.each_with_index do |queue_item, index|
+      queue_item.update_attributes(position: index+1)
+    end
+  end
+
+  def update_queue_items
+    ActiveRecord::Base.transaction do
+      params[:queue_items].each do |queue_item_data|
+        queue_item = QueueItem.find(queue_item_data["id"])
+        queue_item.update_attributes!(position: queue_item_data["position"]) if queue_item.user == current_user
+      end
     end
   end
 
