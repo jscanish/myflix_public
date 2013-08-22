@@ -112,8 +112,9 @@ describe QueueItemsController do
       before do
         @user = Fabricate(:user)
         session[:user_id] = @user.id
-        @queue_item1 = Fabricate(:queue_item, user: @user, position: 1)
-        @queue_item2 = Fabricate(:queue_item, user: @user, position: 2)
+        @video = Fabricate(:video)
+        @queue_item1 = Fabricate(:queue_item, user: @user, position: 1, video: @video)
+        @queue_item2 = Fabricate(:queue_item, user: @user, position: 2, video: @video)
       end
       it "redirects to my_queue page" do
         post :edit, queue_items: [{id: @queue_item1.id, position: 2}, {id: @queue_item2.id, position: 1}]
@@ -133,8 +134,9 @@ describe QueueItemsController do
       before do
         @user = Fabricate(:user)
         session[:user_id] = @user.id
-        @queue_item1 = Fabricate(:queue_item, user: @user, position: 1)
-        @queue_item2 = Fabricate(:queue_item, user: @user, position: 2)
+        @video = Fabricate(:video)
+        @queue_item1 = Fabricate(:queue_item, user: @user, position: 1, video: @video)
+        @queue_item2 = Fabricate(:queue_item, user: @user, position: 2, video: @video)
       end
       it "redirects to the my_queue page" do
         post :edit, queue_items: [{id: @queue_item1.id, position: 3.6}, {id: @queue_item2.id, position: 2}]
@@ -161,9 +163,10 @@ describe QueueItemsController do
       it "does not change any queue_items" do
         user = Fabricate(:user)
         user2 = Fabricate(:user)
+        @video = Fabricate(:video)
         session[:user_id] = user.id
-        queue_item1 = Fabricate(:queue_item, user: user2, position: 1)
-        queue_item2 = Fabricate(:queue_item, user: user, position: 2)
+        queue_item1 = Fabricate(:queue_item, user: user2, position: 1, video: @video)
+        queue_item2 = Fabricate(:queue_item, user: user, position: 2, video: @video)
         post :edit, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 2}]
         expect(queue_item1.reload.position).to eq(1)
       end
