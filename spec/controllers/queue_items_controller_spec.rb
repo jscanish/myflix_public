@@ -130,37 +130,33 @@ describe QueueItemsController do
     end
 
     context "with invalid input" do
+      before do
+        @user = Fabricate(:user)
+        session[:user_id] = @user.id
+        @queue_item1 = Fabricate(:queue_item, user: @user, position: 1)
+        @queue_item2 = Fabricate(:queue_item, user: @user, position: 2)
+      end
       it "redirects to the my_queue page" do
-        user = Fabricate(:user)
-        session[:user_id] = user.id
-        queue_item1 = Fabricate(:queue_item, user: user, position: 1)
-        queue_item2 = Fabricate(:queue_item, user: user, position: 2)
-        post :edit, queue_items: [{id: queue_item1.id, position: 3.6}, {id: queue_item2.id, position: 2}]
+        post :edit, queue_items: [{id: @queue_item1.id, position: 3.6}, {id: @queue_item2.id, position: 2}]
         expect(response).to redirect_to my_queue_path
       end
       it "displays error message" do
-        user = Fabricate(:user)
-        session[:user_id] = user.id
-        queue_item1 = Fabricate(:queue_item, user: user, position: 1)
-        queue_item2 = Fabricate(:queue_item, user: user, position: 2)
-        post :edit, queue_items: [{id: queue_item1.id, position: 3.6}, {id: queue_item2.id, position: 2}]
+        post :edit, queue_items: [{id: @queue_item1.id, position: 3.6}, {id: @queue_item2.id, position: 2}]
         expect(flash[:error]).to_not be_blank
       end
       it "does not change any queue items" do
-        user = Fabricate(:user)
-        session[:user_id] = user.id
-        queue_item1 = Fabricate(:queue_item, user: user, position: 1)
-        queue_item2 = Fabricate(:queue_item, user: user, position: 2)
-        post :edit, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 2.4}]
-        expect(queue_item1.reload.position).to eq(1)
+        post :edit, queue_items: [{id: @queue_item1.id, position: 3}, {id: @queue_item2.id, position: 2.4}]
+        expect(@queue_item1.reload.position).to eq(1)
       end
     end
+
     context "unauthenticated user" do
       it "redirects to my_queue_path" do
         post :edit, queue_items: [{id: 2, position: 3}, {id: 4, position: 2}]
         expect(response).to redirect_to login_path
       end
     end
+
     context "queue_items that don't belong to current user" do
       it "does not change any queue_items" do
         user = Fabricate(:user)
