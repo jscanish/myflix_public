@@ -5,4 +5,10 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
 
   has_secure_password validations: false
+
+  def reorder_queue_position
+    queue_items.each_with_index do |queue_item, index|
+      queue_item.update_attributes(position: index+1)
+    end
+  end
 end
