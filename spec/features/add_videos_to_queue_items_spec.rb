@@ -5,14 +5,12 @@ feature "user adds videos to queue" do
       josh = User.create(full_name: "Josh Scanish", email: "josh@example.com", password: "josh")
       comedies = Fabricate(:category, name: "comedies")
       monk = Fabricate(:video, title: "Monk", category: comedies, description: "A great show")
-      south_park = Fabricate(:video, title: "South Park", category: comedies)
+      south_park = Fabricate(:video, title: "South Park", category: comedies, description: "A good show")
 
     #login to myflix
-    visit '/login'
-    fill_in "Email Address", with: "josh@example.com"
-    fill_in "Password", with: "josh"
-    click_button "Sign in"
-    page.should have_content "comedies"
+    login(josh)
+    current_path.should == home_path
+    page.should have_content "Josh Scanish"
 
     #user clicks on monk video image
     find("a[href='/videos/#{monk.id}']").click
@@ -25,7 +23,7 @@ feature "user adds videos to queue" do
 
     #click on My Queue link
     click_link "My Queue"
-    page.should have_content "Monk"
+    current_path.should == my_queue_path
 
     #click link back to video
     click_link "Monk"
@@ -33,7 +31,7 @@ feature "user adds videos to queue" do
 
     #back to home page
     visit home_path
-    page.should have_content "comedies"
+    current_path.should == home_path
 
     #click on south park image
     find("a[href='/videos/#{south_park.id}']").click
@@ -45,13 +43,17 @@ feature "user adds videos to queue" do
 
     #return to queue page
     click_link "My Queue"
-    page.should have_content "South Park"
+    current_path.should == my_queue_path
 
     #ensure proper ranking of queueitems
     QueueItem.first.video.should eq(monk)
     QueueItem.last.video.should eq(south_park)
 
     #reorder queue items
-
+    fill_in "video_#{monk.id}", with: 2
+    fill_in "video_#{south_park.id}", with: 1
+    click_button "Update Instant Queue"
+    QueueItem.first.position.should eq(2)
+    QueueItem.last.position.should eq(1)
   end
 end
