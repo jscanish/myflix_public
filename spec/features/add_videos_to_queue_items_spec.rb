@@ -2,10 +2,10 @@ require 'spec_helper'
 
 feature "user adds videos to queue" do
   scenario "user adds and reorders videos in the queue" do
-      josh = User.create(full_name: "Josh Scanish", email: "josh@example.com", password: "josh")
-      comedies = Fabricate(:category, name: "comedies")
-      monk = Fabricate(:video, title: "Monk", category: comedies, description: "A great show")
-      south_park = Fabricate(:video, title: "South Park", category: comedies, description: "A good show")
+    josh = User.create(full_name: "Josh Scanish", email: "josh@example.com", password: "josh")
+    comedies = Fabricate(:category, name: "comedies")
+    monk = Fabricate(:video, title: "Monk", category: comedies, description: "A great show")
+    south_park = Fabricate(:video, title: "South Park", category: comedies, description: "A good show")
 
     #login to myflix
     login(josh)
