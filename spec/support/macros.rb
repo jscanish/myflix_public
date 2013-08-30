@@ -16,7 +16,8 @@ def set_video
   @video = Fabricate(:video)
 end
 
-def login(user)
+def login(a_user)
+  user = a_user || Fabricate(:user)
   visit '/login'
   fill_in "Email Address", with: "#{user.email}"
   fill_in "Password", with: "#{user.password}"
