@@ -9,15 +9,16 @@ describe UsersController do
   end
 
   describe "GET show" do
-    it "sets the @user variable" do
+    before do
       set_current_user
-      user = Fabricate(:user)
-      get :show, id: user.id
-      expect(assigns(:user)).to eq(user)
+      @user = Fabricate(:user)
+    end
+    it "sets the @user variable" do
+      get :show, id: @user.id
+      expect(assigns(:user)).to eq(@user)
     end
     it_behaves_like "require_logged_in_user" do
-      user = Fabricate(:user)
-      let(:action) { get :show, id: user.id }
+      let(:action) { get :show, id: @user.id }
     end
   end
 
