@@ -21,7 +21,7 @@ describe CategoriesController do
       @comedy = Fabricate(:category, name: "comedy")
       @drama = Fabricate(:category, name: "drama")
     end
-    it "sets @ category variable" do
+    it "sets @category variable" do
       set_current_user
       get :show, id: @drama.id
       expect(assigns(:category)).to eq(@drama)
