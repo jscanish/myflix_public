@@ -8,6 +8,14 @@ describe UsersController do
     end
   end
 
+  describe "GET show" do
+    it "sets the @user variable" do
+      user = Fabricate(:user)
+      get :show, id: user.id
+      expect(assigns(:user)).to eq(user)
+    end
+  end
+
   describe "POST create" do
     context "with valid inputs" do
       before { post :create, user: Fabricate.attributes_for(:user) }
