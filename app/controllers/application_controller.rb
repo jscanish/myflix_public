@@ -19,4 +19,6 @@ class ApplicationController < ActionController::Base
   def already_in_queue?(user)
     user.queue_items.map {|item| item.video}.include?(@video)
   end
+
+
 end
