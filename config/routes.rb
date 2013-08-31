@@ -7,6 +7,7 @@ Myflix::Application.routes.draw do
   get "/my_queue", to: "queue_items#index"
   post "/update_queue", to: "queue_items#edit"
 
+  get "/people", to: "followings#index"
   resources :queue_items, only: [:create, :destroy]
   resources :users, only: [:create, :show]
   resources :categories, only: [:show]
