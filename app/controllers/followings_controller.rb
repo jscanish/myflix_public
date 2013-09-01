@@ -6,8 +6,13 @@ class FollowingsController < ApplicationController
   end
 
   def create
-    @following = Following.create(follower_id: current_user.id, followee_id: params[:followee_id])
-    redirect_to people_path
+    followee = User.find(params[:followee_id])
+    unless current_user.can_follow?(followee)
+      redirect_to followee
+    else
+      Following.create(follower: current_user, followee_id: params[:followee_id])
+      redirect_to people_path
+    end
   end
 
   def destroy

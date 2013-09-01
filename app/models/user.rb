@@ -14,4 +14,12 @@ class User < ActiveRecord::Base
       queue_item.update_attributes(position: index+1)
     end
   end
+
+  def follows?(another_user)
+    follower_relationships.map(&:followee).include?(another_user)
+  end
+
+  def can_follow?(another_user)
+    !(self.follows?(another_user) || self == another_user)
+  end
 end
