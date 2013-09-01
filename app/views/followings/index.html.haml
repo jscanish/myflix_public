@@ -19,5 +19,5 @@
           %td.extra-padding
             = following.followee.followee_relationships.count
           %td.extra-padding
-            = link_to following, method: :delete do
+            = link_to following, method: :delete, id: "remove_following_#{following.id}" do
               %i.icon-remove
