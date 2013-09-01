@@ -7,7 +7,7 @@ class FollowingsController < ApplicationController
 
   def create
     followee = User.find(params[:followee_id])
-    unless current_user.can_follow?(followee)
+    if !current_user.can_follow?(followee)
       redirect_to followee
     else
       Following.create(follower: current_user, followee_id: params[:followee_id])
