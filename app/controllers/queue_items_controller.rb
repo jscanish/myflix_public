@@ -54,9 +54,6 @@ class QueueItemsController < ApplicationController
     end
   end
 
-  def already_in_queue?(user)
-    user.queue_items.map {|item| item.video}.include?(@video)
-  end
 end
 
 

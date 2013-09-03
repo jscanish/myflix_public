@@ -3,10 +3,9 @@ require 'spec_helper'
 describe QueueItemsController do
   describe "GET index" do
     it "sets the videos for the current user" do
-      user = Fabricate(:user)
-      session[:user_id] = user.id
-      queue_item1 = Fabricate(:queue_item, user: user)
-      queue_item2 = Fabricate(:queue_item, user: user)
+      set_current_user
+      queue_item1 = Fabricate(:queue_item, user: @user)
+      queue_item2 = Fabricate(:queue_item, user: @user)
       get :index
       expect(assigns(:queue_items)).to match_array([queue_item1, queue_item2])
     end
@@ -15,9 +14,8 @@ describe QueueItemsController do
   describe "POST create" do
     context "with authentication" do
       before do
-        @user = Fabricate(:user)
-        session[:user_id] = @user.id
-        @video = Fabricate(:video)
+        set_current_user
+        set_video
         post :create, queue_item: Fabricate.attributes_for(:queue_item), user_id: @user.id, video_id: @video.id
       end
 
@@ -40,10 +38,15 @@ describe QueueItemsController do
       end
     end
 
+    context "without authentication" do
+      it_behaves_like "require_logged_in_user" do
+        let(:action) { post :create, queue_item: Fabricate.attributes_for(:queue_item) }
+      end
+    end
+
     context "video is already in queue"do
       before do
-        @user = Fabricate(:user)
-        session[:user_id] = @user.id
+        set_current_user
         @monk = Fabricate(:video)
         Fabricate(:queue_item, video: @monk, user: @user)
         post :create, video_id: @monk.id
@@ -58,23 +61,12 @@ describe QueueItemsController do
         expect(flash[:notice]).to_not be_blank
       end
     end
-
-    context "without authentication" do
-      before do
-        @video = Fabricate(:video)
-        post :create, queue_item: Fabricate.attributes_for(:queue_item), user_id: nil, video_id: @video.id
-      end
-      it "redirects user to login page" do
-        expect(response).to redirect_to login_path
-      end
-    end
   end
 
   describe "POST destroy" do
     context "authenticated users" do
       before do
-        @user = Fabricate(:user)
-        session[:user_id] = @user.id
+        set_current_user
         @video1 = Fabricate(:video)
         @video2 = Fabricate(:video)
         Fabricate(:queue_item, video: @video1, user: @user, position: 1)
@@ -94,12 +86,12 @@ describe QueueItemsController do
 
     context "unauthenticated users" do
       before do
-        @video1 = Fabricate(:video)
-        Fabricate(:queue_item, video: @video1, user: @user, position: 1)
+        set_video
+        Fabricate(:queue_item, video: @video, user: @user, position: 1)
         post :destroy, id: 1
       end
-      it "redirects user to login page" do
-        expect(response).to redirect_to login_path
+      it_behaves_like "require_logged_in_user" do
+        let(:action) { post :destroy, id: 1 }
       end
       it "doesn't delete the video" do
         expect(QueueItem.count).to eq(1)
@@ -110,9 +102,8 @@ describe QueueItemsController do
   describe "POST edit" do
     context "with valid input" do
       before do
-        @user = Fabricate(:user)
-        session[:user_id] = @user.id
-        @video = Fabricate(:video)
+        set_current_user
+        set_video
         @queue_item1 = Fabricate(:queue_item, user: @user, position: 1, video: @video)
         @queue_item2 = Fabricate(:queue_item, user: @user, position: 2, video: @video)
       end
@@ -132,9 +123,8 @@ describe QueueItemsController do
 
     context "with invalid input" do
       before do
-        @user = Fabricate(:user)
-        session[:user_id] = @user.id
-        @video = Fabricate(:video)
+        set_current_user
+        set_video
         @queue_item1 = Fabricate(:queue_item, user: @user, position: 1, video: @video)
         @queue_item2 = Fabricate(:queue_item, user: @user, position: 2, video: @video)
       end
@@ -161,12 +151,11 @@ describe QueueItemsController do
 
     context "queue_items that don't belong to current user" do
       it "does not change any queue_items" do
-        user = Fabricate(:user)
+        set_current_user
+        set_video
         user2 = Fabricate(:user)
-        @video = Fabricate(:video)
-        session[:user_id] = user.id
         queue_item1 = Fabricate(:queue_item, user: user2, position: 1, video: @video)
-        queue_item2 = Fabricate(:queue_item, user: user, position: 2, video: @video)
+        queue_item2 = Fabricate(:queue_item, user: @user, position: 2, video: @video)
         post :edit, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 2}]
         expect(queue_item1.reload.position).to eq(1)
       end

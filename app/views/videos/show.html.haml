@@ -13,8 +13,9 @@
         .actions
           %a
             = button_to "Watch Now", "", class: "btn-primary btn"
-          %a
-            = button_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: "btn"
+          - unless already_in_queue?(current_user)
+            %a
+              = button_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: "btn"
 
 %section.reviews.container
   .row

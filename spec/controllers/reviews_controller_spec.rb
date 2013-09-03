@@ -5,8 +5,7 @@ describe ReviewsController do
     let(:video) { Fabricate(:video) }
 
     context "with authenticated users" do
-      let(:current_user) { Fabricate(:user) }
-      before { session[:user_id] = current_user.id}
+      before { set_current_user }
 
       context "with valid credentials" do
         before do
@@ -24,7 +23,7 @@ describe ReviewsController do
         it "associates review with current_user" do
           expect(Review.first.user).to eq(current_user)
         end
-        it "flashs success message" do
+        it "flashes success message" do
           expect(flash[:notice]).to_not be_blank
         end
       end
@@ -49,10 +48,10 @@ describe ReviewsController do
         end
       end
     end
+
     context "with unauthenticated users" do
-      it "redirects to home page" do
-        post :create, review: Fabricate.attributes_for(:review), video_id: video.id
-        expect(response).to redirect_to login_path
+      it_behaves_like "require_logged_in_user" do
+        let(:action) { post :create, review: Fabricate.attributes_for(:review), video_id: video.id }
       end
     end
   end
