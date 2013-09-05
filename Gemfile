@@ -18,6 +18,7 @@ group :development do
   gem 'pry'
   gem 'pry-nav'
   gem 'better_errors'
+  gem 'letter_opener'
 end
 
 group :production do
