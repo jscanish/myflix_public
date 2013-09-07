@@ -38,10 +38,21 @@ Category.create(name: "TV Science Fiction")
 
 josh = User.create(full_name: "Josh Scanish", email: "josh@example.com", password: "josh")
 jason = User.create(full_name: "Jason S", email: "jason@example.com", password: "jason")
+steph = User.create(full_name: "Steph S", email: "steph@example.com", password: "steph")
 
 Review.create(user: josh, video: monk, rating: 3, content: "A really good show!")
 Review.create(user: josh, video: monk, rating: 2, content: "An ok show")
+Review.create(user: jason, video: futurama, rating: 3, content: "A really funny show")
+Review.create(user: steph, video: breaking_bad, rating: 4, content: "A great drama")
 
 QueueItem.create(user: jason, video: monk, position: 1)
 QueueItem.create(user: jason, video: futurama, position: 2)
 QueueItem.create(user: josh, video: breaking_bad, position: 1)
+
+josh.follower_relationships << Following.create(follower_id: josh.id, followee_id: jason.id)
+josh.follower_relationships << Following.create(follower_id: josh.id, followee_id: steph.id)
+jason.follower_relationships << Following.create(follower_id: jason.id, followee_id: josh.id)
+jason.follower_relationships << Following.create(follower_id: jason.id, followee_id: steph.id)
+steph.follower_relationships << Following.create(follower_id: steph.id, followee_id: josh.id)
+
+

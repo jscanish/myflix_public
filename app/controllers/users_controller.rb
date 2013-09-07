@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_user, only: [:show]
 
   def new
     @user = User.new
@@ -6,7 +7,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
       session[:user_id] = @user.id
       redirect_to home_path, notice: "You registered!"
@@ -15,7 +15,9 @@ class UsersController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @user = User.find(params[:id])
+  end
 
 
 
