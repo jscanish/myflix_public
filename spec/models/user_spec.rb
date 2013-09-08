@@ -10,6 +10,11 @@ describe User do
   it { should have_many(:follower_relationships) }
   it { should have_many(:followee_relationships) }
 
+  it "generates random token when user is created" do
+    user = Fabricate(:user)
+    expect(user.token).to be_present
+  end
+
   describe "#follows?" do
     it "returns true if user already follows another_user" do
       josh = Fabricate(:user, full_name: "Josh S", password: "josh", email: "josh@example.com")
