@@ -36,6 +36,24 @@ describe UsersController do
       end
     end
 
+    context "email sending" do
+      it "sends the email" do
+        post :create, user: Fabricate.attributes_for(:user)
+        ActionMailer::Base.deliveries.should_not be_empty
+      end
+      it "sends email to proper user" do
+        post :create, user: Fabricate.attributes_for(:user)
+        message = ActionMailer::Base.deliveries.last
+        message.to.should == [User.first.email]
+      end
+      it "has the proper content" do
+        post :create, user: Fabricate.attributes_for(:user)
+        message = ActionMailer::Base.deliveries.last
+        message.body.should include("Welcome to Myflix.com")
+      end
+    end
+
+
     context "with invalid inputs" do
       before { post :create, user: Fabricate.attributes_for(:user, password: "hi") }
       it "does not create user when registration fails" do
