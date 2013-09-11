@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130908070822) do
+ActiveRecord::Schema.define(version: 20130911011732) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20130908070822) do
   create_table "followings", force: true do |t|
     t.integer  "follower_id"
     t.integer  "followee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invites", force: true do |t|
+    t.string   "full_name"
+    t.integer  "inviter_id"
+    t.string   "invitee_email"
+    t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
