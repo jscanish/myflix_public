@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
   has_many :follower_relationships, class_name: "Following", foreign_key: :follower_id
   has_many :followee_relationships, class_name: "Following", foreign_key: :followee_id
+  has_many :invites, foreign_key: :inviter_id
 
   before_create :generate_token
   has_secure_password validations: false
