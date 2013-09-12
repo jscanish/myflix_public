@@ -5,16 +5,16 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-def new_with_invite_token
-  invite = Invite.where(token: params[:token]).first
-  if invite
-    @user = User.new(email: invite.invitee_email)
-    @invite_token = invite.token
-    render :new
-  else
-    redirect_to expired_token_path
+  def new_with_invite_token
+    invite = Invite.where(token: params[:token]).first
+    if invite
+      @user = User.new(email: invite.invitee_email)
+      @invite_token = invite.token
+      render :new
+    else
+      redirect_to expired_token_path
+    end
   end
-end
 
   def create
     @user = User.new(user_params)
@@ -33,8 +33,7 @@ end
   end
 
 
-
-private
+  private
 
   def user_params
     params.require(:user).permit(:full_name, :email, :password)

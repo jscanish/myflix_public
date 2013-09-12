@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   end
 
   def follow(another_user)
-    follower_relationships.create(followee: another_user ) if can_follow?(another_user)
+    follower_relationships.create(followee: another_user) if can_follow?(another_user)
   end
 
   def can_follow?(another_user)
