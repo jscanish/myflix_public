@@ -47,5 +47,4 @@ class UsersController < ApplicationController
       invite.update_column(:token, nil)
     end
   end
-
 end

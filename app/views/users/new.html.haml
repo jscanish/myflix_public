@@ -13,7 +13,7 @@
             = f.password_field :password
             = f.label :full_name, "Full Name"
             = f.text_field :full_name
-            = hidden_field_tag :invite_token, @token
+            = hidden_field_tag :invite_token, @invite_token
         %fieldset.actions.control-group
           .controls
             %input(type="submit" value="Sign Up" class="btn")
