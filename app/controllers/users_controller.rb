@@ -19,8 +19,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      handle_invitation
       session[:user_id] = @user.id
+      handle_invitation
       redirect_to home_path, notice: "You registered!"
       AppMailer.welcome_email(current_user).deliver
     else
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:full_name, :email, :password)
+    params.require(:user).permit(:full_name, :email, :password, :follower_relationships, :followee_relationships)
   end
 
   def handle_invitation

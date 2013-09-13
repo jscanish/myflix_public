@@ -23,3 +23,10 @@ def login(a_user)
   fill_in "Password", with: "#{user.password}"
   click_button "Sign in"
 end
+
+def logout(a_user)
+  user = a_user
+  click_on "Welcome, #{user.full_name}"
+  click_on "Sign Out"
+end
+
