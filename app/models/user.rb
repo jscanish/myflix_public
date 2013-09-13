@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include Tokenable
   has_many :queue_items, -> { order(:position) }
   has_many :reviews, -> { order("created_at DESC") }
   validates :full_name, presence: true
@@ -8,7 +9,6 @@ class User < ActiveRecord::Base
   has_many :followee_relationships, class_name: "Following", foreign_key: :followee_id
   has_many :invites, foreign_key: :inviter_id
 
-  before_create :generate_token
   has_secure_password validations: false
 
   def reorder_queue_position
@@ -28,9 +28,4 @@ class User < ActiveRecord::Base
   def can_follow?(another_user)
     !(self.follows?(another_user) || self == another_user)
   end
-
-  def generate_token
-    self.token = SecureRandom.urlsafe_base64
-  end
-
 end
