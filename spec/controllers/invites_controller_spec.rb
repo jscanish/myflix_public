@@ -37,6 +37,7 @@ describe InvitesController do
     end
 
     context "with invalid inputs" do
+      after { ActionMailer::Base.deliveries.clear }
       before do
         set_current_user
       end
