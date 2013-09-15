@@ -8,9 +8,9 @@ class InvitesController < ApplicationController
   def create
     @invite = Invite.create(invite_params)
     if @invite.save
-      AppMailer.invitation_email(@invite).deliver
       redirect_to new_invite_path
       flash[:success] = "Invitiation successfully sent!"
+      AppMailer.invitation_email(@invite).deliver
     else
       render :new
     end
