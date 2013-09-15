@@ -8,5 +8,7 @@ feature "user signs in" do
     fill_in "Password", with: "josh"
     click_button "Sign in"
     page.should have_content "Josh Scanish"
+
+    clear_email
   end
 end
