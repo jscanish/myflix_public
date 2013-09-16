@@ -66,6 +66,7 @@ Myflix::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
 
+  config.action_mailer.default_url_options = { :host => "www.safe-hamlet-6689.com" }
   config.action_mailer.smtp_settings = {
   :port           => ENV['MAILGUN_SMTP_PORT'],
   :address        => ENV['MAILGUN_SMTP_SERVER'],
