@@ -8,6 +8,7 @@ gem 'bootstrap_forms'
 gem 'bcrypt-ruby', '= 3.0.1'
 gem 'fabrication'
 gem 'faker'
+gem 'sidekiq'
 
 group :assets do
   gem 'sass-rails'

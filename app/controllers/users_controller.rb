@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       handle_invitation
       redirect_to home_path, notice: "You registered!"
-      AppMailer.welcome_email(current_user).deliver
+      AppMailer.delay.welcome_email(current_user)
     else
       render :new
     end
