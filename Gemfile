@@ -9,6 +9,7 @@ gem 'bcrypt-ruby', '= 3.0.1'
 gem 'fabrication'
 gem 'faker'
 gem 'sidekiq'
+gem 'unicorn'
 
 group :assets do
   gem 'sass-rails'
