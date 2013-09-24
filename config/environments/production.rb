@@ -65,13 +65,15 @@ Myflix::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.default_url_options = { :host => "www.safe-hamlet-6689.com" }
   config.action_mailer.smtp_settings = {
-  address:              'smtp.gmail.com',
-  port:                 587,
-  domain:               'http://safe-hamlet-6689.herokuapp.com/',
-  user_name:            ENV['gmail_username'],
-  password:             ENV['gmail_password'],
-  authentication:       'plain',
-  enable_starttls_auto: true  }
+  :port           => ENV['MAILGUN_SMTP_PORT'],
+  :address        => ENV['MAILGUN_SMTP_SERVER'],
+  :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+  :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+  :domain         => 'safe-hamlet-6689',
+  :authentication => :plain,
+  }
+  config.action_mailer.delivery_method = :smtp
 end

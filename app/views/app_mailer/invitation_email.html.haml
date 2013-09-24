@@ -1,0 +1,9 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %p
+      = @invite.message
+    %p
+      = link_to "Accept this invitation", register_with_token_url(@invite.token)

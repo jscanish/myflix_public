@@ -4,6 +4,7 @@ ruby '2.0.0'
 gem 'rails', '4.0.0'
 gem 'haml-rails'
 gem 'bootstrap-sass'
+gem 'bootstrap_forms'
 gem 'bcrypt-ruby', '= 3.0.1'
 gem 'fabrication'
 gem 'faker'
@@ -36,5 +37,6 @@ group :test do
   gem 'shoulda-matchers'
   gem 'launchy'
   gem 'capybara'
+  gem 'capybara-email'
 end
 
