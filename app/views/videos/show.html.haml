@@ -11,8 +11,7 @@
         %p
           = @video.description
         .actions
-          %a
-            = button_to "Watch Now", "", class: "btn-primary btn"
+          %a.btn.btn-primary(href="#{@video.video_url}") Watch Now
           - unless already_in_queue?(current_user)
             %a
               = button_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: "btn"
