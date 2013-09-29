@@ -12,16 +12,8 @@
             = f.text_field :title, class: 'span3'
             = f.select :category_id, options_for_select(Category.all.map {|category| [category.name, category.id]})
             = f.text_area :description, class: 'span6', rows: 8
-            .control-group
-              %label.control-label Large Cover
-              .controls
-                %span.btn.btn-file
-                  %input(type="file")
-            .control-group
-              %label.control-label Small Cover
-              .controls
-                %span.btn.btn-file
-                  %input(type="file")
+            = f.file_field :large_cover, class: 'btn btn-file'
+            = f. file_field :small_cover, class: 'btn btn-file'
 
           %fieldset.actions.control-group
             .controls
