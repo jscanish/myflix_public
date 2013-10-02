@@ -1,8 +1,16 @@
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+<script type="text/javascript">
+Stripe.setPublishableKey("#{ENV['STRIPE_PUBLISHABLE_KEY']}");
+</script>
+
+= javascript_include_tag 'payment'
+
 %section.register.container
   .row
     .span10.offset1
       %form.form-horizontal
-      = errors_form_for @user, class: "form-horizontal" do |f|
+      = errors_form_for @user, class: "form-horizontal", id: "payment-form" do |f|
         %header
           %h1 Register
         %fieldset
@@ -15,19 +23,20 @@
             = f.text_field :full_name
             = hidden_field_tag :invite_token, @invite_token
         %fieldset.credit_card
+          %span.payment-errors
           .control-group
             %label.control-label Credit Card Number
             .controls
-              %input.span3(type="text")
+              %input.span3(type="text" data-stripe="number")
           .control-group
             %label.control-label Security Code
             .controls
-              %input.span3(type="text")
+              %input.span3(type="text" data-stripe="cvc")
           .control-group
             %label.control-label Expiration
             .controls
-              = select_month(Date.today, {add_month_numbers: true},  class: 'span2')
-              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'span1')
+              = select_month(Date.today, {add_month_numbers: true},  class: 'span2', data: {stripe: "exp-month"})
+              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'span1', data: {stripe: "exp-year"})
         %fieldset.actions.control-group
           .controls
             %input(type="submit" value="Sign Up" class="btn")
