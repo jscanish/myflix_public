@@ -21,6 +21,13 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       handle_invitation
+      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+      Stripe::Charge.create(
+        :amount => 999,
+        :currency => "usd",
+        :card => params[:stripeToken],
+        :description => "Registration charge for #{@user.email}"
+        )
       redirect_to home_path, notice: "You registered!"
       AppMailer.delay.welcome_email(current_user)
     else
