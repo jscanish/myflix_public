@@ -10,6 +10,9 @@ gem 'fabrication'
 gem 'faker'
 gem 'sidekiq'
 gem 'unicorn'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'stripe'
 
 group :assets do
   gem 'sass-rails'
