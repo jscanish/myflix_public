@@ -10,17 +10,17 @@ Stripe.setPublishableKey("#{ENV['STRIPE_PUBLISHABLE_KEY']}");
   .row
     .span10.offset1
       %form.form-horizontal
-      = errors_form_for @user, class: "form-horizontal", id: "payment-form" do |f|
+      = errors_form_for @user, class: "form-horizontal", html: { id: "payment-form" } do |f|
         %header
           %h1 Register
         %fieldset
           .control-group
             = f.label :email, "Email"
-            = f.email_field :email
+            = f.email_field :email, label: "Email", class: 'span3'
             = f.label :password, "Password"
-            = f.password_field :password
+            = f.password_field :password, class: 'span3'
             = f.label :full_name, "Full Name"
-            = f.text_field :full_name
+            = f.text_field :full_name, class: 'span3'
             = hidden_field_tag :invite_token, @invite_token
         %fieldset.credit_card
           %span.payment-errors
