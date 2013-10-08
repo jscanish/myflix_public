@@ -3,7 +3,7 @@ module StripeWrapper
     def self.create(options={})
       Stripe::Charge.create(
         amount: options[:amount],
-        currency: 'usd',
+        currency: "usd",
         card: options[:card],
         description: options[:description]
       )

@@ -24,7 +24,10 @@ describe UsersController do
 
   describe "POST create" do
     context "with valid inputs" do
-      before { post :create, user: Fabricate.attributes_for(:user) }
+      before do
+        Stripe::Charge.stub(:create)
+        post :create, user: Fabricate.attributes_for(:user)
+      end
       it "creates the user" do
         expect(User.count).to eq(1)
       end
@@ -35,29 +38,36 @@ describe UsersController do
         expect(response).to redirect_to home_path
       end
     end
-      it "makes the use follow the inviter" do
-        user = Fabricate(:user)
-        invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
-        post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
-        joe = User.where(email: 'joe@example.com').first
-        expect(joe.follows?(user)).to be_true
-      end
-      it "makes the inviter follow the user" do
-        user = Fabricate(:user)
-        invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
-        post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
-        joe = User.where(email: 'joe@example.com').first
-        expect(user.follows?(joe)).to be_true
-      end
-      it "expires the invitation when accepted" do
-        user = Fabricate(:user)
-        invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
-        post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
-        joe = User.where(email: 'joe@example.com').first
-        expect(Invite.first.token).to be_nil
-      end
+
+    it "makes the use follow the inviter" do
+      user = Fabricate(:user)
+      invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
+      Stripe::Charge.stub(:create)
+      post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
+      joe = User.where(email: 'joe@example.com').first
+      expect(joe.follows?(user)).to be_true
+    end
+    it "makes the inviter follow the user" do
+      user = Fabricate(:user)
+      invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
+      Stripe::Charge.stub(:create)
+      post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
+      joe = User.where(email: 'joe@example.com').first
+      expect(user.follows?(joe)).to be_true
+    end
+    it "expires the invitation when accepted" do
+      user = Fabricate(:user)
+      invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
+      Stripe::Charge.stub(:create)
+      post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
+      joe = User.where(email: 'joe@example.com').first
+      expect(Invite.first.token).to be_nil
+    end
 
     context "email sending" do
+      before do
+        Stripe::Charge.stub(:create)
+      end
       it "sends the email" do
         post :create, user: Fabricate.attributes_for(:user)
         ActionMailer::Base.deliveries.should_not be_empty

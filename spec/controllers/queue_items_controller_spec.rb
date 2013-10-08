@@ -1,5 +1,4 @@
 require 'spec_helper'
-
 describe QueueItemsController do
   describe "GET index" do
     it "sets the videos for the current user" do
@@ -137,7 +136,7 @@ describe QueueItemsController do
         expect(flash[:error]).to_not be_blank
       end
       it "does not change any queue items" do
-        post :edit, queue_items: [{id: @queue_item1.id, position: 3}, {id: @queue_item2.id, position: 2.4}]
+        post :edit, queue_items: [{id: @queue_item1.id, position: 3.1}, {id: @queue_item2.id, position: 2.4}]
         expect(@queue_item1.reload.position).to eq(1)
       end
     end
