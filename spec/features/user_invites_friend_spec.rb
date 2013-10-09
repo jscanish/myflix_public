@@ -2,7 +2,6 @@ require 'spec_helper'
 
 feature "user invites friend" do
   scenario "user send email invitation, and friend registers", { js: true, vcr: true } do
-    # Stripe::Charge.stub(:create)
     josh = User.create(full_name: "Josh Scanish", email: "josh@example.com", password: "josh")
     login(josh)
 
