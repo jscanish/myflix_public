@@ -32,6 +32,19 @@ describe Video do
     end
   end
 
+  describe "#video_rating" do
+    it "returns the video review rating if one exists" do
+      video = Video.create(title: "Monk", description: "A great video")
+      review = Review.create(rating: 3, content: "good video", video: video)
+      expect(video.video_rating).to eq(3)
+    end
+    it "returns 'N/A' if no rating exists" do
+      video = Video.create(title: "Monk", description: "A great video")
+      expect(video.video_rating).to eq("N/A")
+    end
+  end
+
+
 end
 
 

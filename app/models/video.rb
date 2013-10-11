@@ -17,4 +17,10 @@ class Video < ActiveRecord::Base
     end
   end
 
+  def video_rating
+    ratings = self.reviews.map { |r| r.rating }
+    sum = 0
+    ratings.each { |r| sum += r }
+    ratings.count == 0 ? "N/A" : sum / ratings.count
+  end
 end

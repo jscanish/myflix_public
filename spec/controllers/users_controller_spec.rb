@@ -43,19 +43,19 @@ describe UsersController do
     context "with valid personal info and declined card" do
       it "does not create a user" do
         charge = double(:charge, successful?: false, error_message: "There's a problem with your credit card." )
-        Stripe::Charge.stub(:create).and_return(charge)
+        StripeWrapper::Charge.stub(:create).and_return(charge)
         post :create, user: Fabricate.attributes_for(:user), stripeToken: '123423'
         expect(User.count).to eq(0)
       end
       it "renders the new template" do
         charge = double(:charge, successful?: false, error_message: "There's a problem with your credit card." )
-        Stripe::Charge.stub(:create).and_return(charge)
+        StripeWrapper::Charge.stub(:create).and_return(charge)
         post :create, user: Fabricate.attributes_for(:user), stripeToken: '123423'
         expect(response).to render_template :new
       end
       it "displays error message" do
         charge = double(:charge, successful?: false, error_message: "There's a problem with your credit card.")
-        Stripe::Charge.stub(:create).and_return(charge)
+        StripeWrapper::Charge.stub(:create).and_return(charge)
         post :create, user: Fabricate.attributes_for(:user), stripeToken: '123423'
         expect(flash[:error]).to_not be_blank
       end
