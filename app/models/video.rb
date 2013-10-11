@@ -21,6 +21,6 @@ class Video < ActiveRecord::Base
     ratings = self.reviews.map { |r| r.rating }
     sum = 0
     ratings.each { |r| sum += r }
-    ratings.count == 0 ? "N/A" : sum / ratings.count
+    ratings.count == 0 ? "N/A" : (sum.to_f / ratings.count).round(1)
   end
 end

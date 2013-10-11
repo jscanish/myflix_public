@@ -42,6 +42,12 @@ describe Video do
       video = Video.create(title: "Monk", description: "A great video")
       expect(video.video_rating).to eq("N/A")
     end
+    it "returns average if more than one rating exists" do
+      video = Video.create(title: "Monk", description: "A great video")
+      review1 = Review.create(rating: 5, content: "good video", video: video)
+      review2 = Review.create(rating: 2, content: "bad video", video: video)
+      expect(video.video_rating).to eq(3.5)
+    end
   end
 
 
