@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "user invites friend" do
-  scenario "user send email invitation, and friend registers" do
+  scenario "user send email invitation, and friend registers", { js: true, vcr: true } do
     josh = User.create(full_name: "Josh Scanish", email: "josh@example.com", password: "josh")
     login(josh)
 
@@ -17,6 +17,10 @@ feature "user invites friend" do
 
     fill_in "Password", with: "password"
     fill_in "Full Name", with: "John Doe"
+    fill_in "Credit Card Number", with: "4242424242424242"
+    fill_in "Security Code", with: "123"
+    select "7 - July", from: "date_month"
+    select "2017", from: "date_year"
     click_button "Sign Up"
     expect(page).to have_content("You registered!")
 

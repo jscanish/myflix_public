@@ -1,0 +1,177 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/tokens
+    body:
+      encoding: US-ASCII
+      string: card[number]=4242424242424242&card[exp_month]=6&card[exp_year]=2018&card[cvc]=314
+    headers:
+      Accept:
+      - '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.8.7
+      Authorization:
+      - Bearer sk_test_N48qOGDVJ2ZckNemGrCnKKFa
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.8.7","lang":"ruby","lang_version":"2.0.0 p247 (2013-06-27)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        josh-HP 3.5.0-17-generic #28-Ubuntu SMP Tue Oct 9 19:31:23 UTC 2012 x86_64
+        x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '81'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 08 Oct 2013 06:02:55 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '570'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "tok_102iKE2KTpnhK99nCr7c1tFl",
+          "livemode": false,
+          "created": 1381212175,
+          "used": false,
+          "object": "token",
+          "type": "card",
+          "card": {
+            "id": "card_102iKE2KTpnhK99nXuByYRRN",
+            "object": "card",
+            "last4": "4242",
+            "type": "Visa",
+            "exp_month": 6,
+            "exp_year": 2018,
+            "fingerprint": "F2GSq6gyzDeK3LYE",
+            "customer": null,
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 08 Oct 2013 06:02:54 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: US-ASCII
+      string: amount=999&currency=usd&card=tok_102iKE2KTpnhK99nCr7c1tFl&description=A%20valid%20charge
+    headers:
+      Accept:
+      - '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.8.7
+      Authorization:
+      - Bearer sk_test_N48qOGDVJ2ZckNemGrCnKKFa
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.8.7","lang":"ruby","lang_version":"2.0.0 p247 (2013-06-27)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        josh-HP 3.5.0-17-generic #28-Ubuntu SMP Tue Oct 9 19:31:23 UTC 2012 x86_64
+        x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '88'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 08 Oct 2013 06:02:56 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '979'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "ch_102iKE2KTpnhK99nYwtoL4UE",
+          "object": "charge",
+          "created": 1381212176,
+          "livemode": false,
+          "paid": true,
+          "amount": 999,
+          "currency": "usd",
+          "refunded": false,
+          "card": {
+            "id": "card_102iKE2KTpnhK99nXuByYRRN",
+            "object": "card",
+            "last4": "4242",
+            "type": "Visa",
+            "exp_month": 6,
+            "exp_year": 2018,
+            "fingerprint": "F2GSq6gyzDeK3LYE",
+            "customer": null,
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "pass",
+            "address_line1_check": null,
+            "address_zip_check": null
+          },
+          "captured": true,
+          "refunds": [],
+          "balance_transaction": "txn_102iKE2KTpnhK99njWmR6pnH",
+          "failure_message": null,
+          "failure_code": null,
+          "amount_refunded": 0,
+          "customer": null,
+          "invoice": null,
+          "description": "A valid charge",
+          "dispute": null,
+          "metadata": {}
+        }
+    http_version: 
+  recorded_at: Tue, 08 Oct 2013 06:02:56 GMT
+recorded_with: VCR 2.6.0

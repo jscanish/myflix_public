@@ -23,8 +23,12 @@ describe UsersController do
   end
 
   describe "POST create" do
-    context "with valid inputs" do
-      before { post :create, user: Fabricate.attributes_for(:user) }
+    context "with valid personal info and valid card" do
+      before do
+        charge = double(:charge, successful?: true)
+        Stripe::Charge.stub(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '123423'
+      end
       it "creates the user" do
         expect(User.count).to eq(1)
       end
@@ -35,40 +39,73 @@ describe UsersController do
         expect(response).to redirect_to home_path
       end
     end
-      it "makes the use follow the inviter" do
-        user = Fabricate(:user)
-        invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
-        post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
-        joe = User.where(email: 'joe@example.com').first
-        expect(joe.follows?(user)).to be_true
+
+    context "with valid personal info and declined card" do
+      it "does not create a user" do
+        charge = double(:charge, successful?: false, error_message: "There's a problem with your credit card." )
+        StripeWrapper::Charge.stub(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '123423'
+        expect(User.count).to eq(0)
       end
-      it "makes the inviter follow the user" do
-        user = Fabricate(:user)
-        invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
-        post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
-        joe = User.where(email: 'joe@example.com').first
-        expect(user.follows?(joe)).to be_true
+      it "renders the new template" do
+        charge = double(:charge, successful?: false, error_message: "There's a problem with your credit card." )
+        StripeWrapper::Charge.stub(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '123423'
+        expect(response).to render_template :new
       end
-      it "expires the invitation when accepted" do
-        user = Fabricate(:user)
-        invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
-        post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
-        joe = User.where(email: 'joe@example.com').first
-        expect(Invite.first.token).to be_nil
+      it "displays error message" do
+        charge = double(:charge, successful?: false, error_message: "There's a problem with your credit card.")
+        StripeWrapper::Charge.stub(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '123423'
+        expect(flash[:error]).to_not be_blank
       end
+    end
+
+
+    it "makes the use follow the inviter" do
+      user = Fabricate(:user)
+      invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
+      charge = double(:charge, successful?: true)
+      Stripe::Charge.stub(:create).and_return(charge)
+      post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
+      joe = User.where(email: 'joe@example.com').first
+      expect(joe.follows?(user)).to be_true
+    end
+    it "makes the inviter follow the user" do
+      user = Fabricate(:user)
+      invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
+      charge = double(:charge, successful?: true)
+      Stripe::Charge.stub(:create).and_return(charge)
+      post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
+      joe = User.where(email: 'joe@example.com').first
+      expect(user.follows?(joe)).to be_true
+    end
+    it "expires the invitation when accepted" do
+      user = Fabricate(:user)
+      invite = Fabricate(:invite, inviter: user, invitee_email: 'joe@example.com')
+      charge = double(:charge, successful?: true)
+      Stripe::Charge.stub(:create).and_return(charge)
+      post :create, user: { email: 'joe@example.com', full_name: 'joe', password: 'password' }, invite_token: invite.token
+      joe = User.where(email: 'joe@example.com').first
+      expect(Invite.first.token).to be_nil
+    end
 
     context "email sending" do
+      before do
+        charge = double(:charge, successful?: true)
+        Stripe::Charge.stub(:create).and_return(charge)
+      end
       it "sends the email" do
-        post :create, user: Fabricate.attributes_for(:user)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '123453'
         ActionMailer::Base.deliveries.should_not be_empty
       end
       it "sends email to proper user" do
-        post :create, user: Fabricate.attributes_for(:user)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '123453'
         message = ActionMailer::Base.deliveries.last
         message.to.should == [User.first.email]
       end
       it "has the proper content" do
-        post :create, user: Fabricate.attributes_for(:user)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '123453'
         message = ActionMailer::Base.deliveries.last
         message.body.should include("Welcome to Myflix.com")
       end
@@ -85,6 +122,9 @@ describe UsersController do
       end
       it "sets @user variable when registration fails" do
         expect(assigns(:user)).to be_instance_of(User)
+      end
+      it "does not attempt to charge credit card" do
+        Stripe::Charge.should_not_receive(:create)
       end
     end
   end
