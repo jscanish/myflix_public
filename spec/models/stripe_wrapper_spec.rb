@@ -1,6 +1,27 @@
 require 'spec_helper'
 
 describe StripeWrapper do
+  let(:valid_token) do
+        Stripe::Token.create(
+          :card => {
+            :number => "4242424242424242",
+            :exp_month => 6,
+            :exp_year => 2018,
+            :cvc => "314"
+          }
+        ).id
+  end
+
+  let(:declined_card_token) do
+        Stripe::Token.create(
+          :card => {
+            :number => "4000000000000002",
+            :exp_month => 6,
+            :exp_year => 2018,
+            :cvc => "314"
+          }
+        ).id
+  end
   describe StripeWrapper::Charge do
     describe ".create" do
       it "successfully charges credit card", :vcr do
