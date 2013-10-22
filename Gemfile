@@ -16,6 +16,7 @@ gem 'stripe'
 gem 'figaro'
 gem 'draper'
 
+
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'

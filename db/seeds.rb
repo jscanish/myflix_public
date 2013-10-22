@@ -37,8 +37,8 @@ Category.create(name: "TV Comedies")
 Category.create(name: "TV Science Fiction")
 
 josh = User.create(full_name: "Josh Scanish", email: "josh@example.com", password: "josh")
-jason = User.create(full_name: "Jason S", email: "jason@example.com", password: "jason")
-steph = User.create(full_name: "Steph S", email: "steph@example.com", password: "steph")
+jason = User.create(full_name: "Jason", email: "jason@example.com", password: "jason")
+steph = User.create(full_name: "Steph", email: "steph@example.com", password: "steph")
 
 Review.create(user: josh, video: monk, rating: 3, content: "A really good show!")
 Review.create(user: josh, video: monk, rating: 2, content: "An ok show")
