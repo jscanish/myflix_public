@@ -1,5 +1,5 @@
 class AdminsController < ApplicationController
-  before_action :require_user, :require_admin
+  before_action :require_user
 
   def require_admin
     redirect_to root_path unless current_user.admin
